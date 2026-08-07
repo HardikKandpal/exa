@@ -1,5 +1,7 @@
 import logging
 
+import uvicorn
+from app.agent.registry import PluginRegistry
 from app.config import settings
 from app.models.api import APIResponse, ErrorDetail
 from app.routers import agent, analytics, artifacts, health
@@ -59,11 +61,11 @@ async def global_exception_handler(request: Request, exc: Exception):
 async def on_startup():
     logger.info("Initializing Exaqube Discord Analytics Platform API...")
     # Discover plugins on startup
-    from app.agent.registry import PluginRegistry
+    
     plugins = PluginRegistry.discover_plugins()
     logger.info(f"Loaded {len(plugins)} agent plugins: {list(plugins.keys())}")
 
 
 if __name__ == "__main__":
-    import uvicorn
+    
     uvicorn.run("app.main:app", host=settings.HOST, port=settings.PORT, reload=True)

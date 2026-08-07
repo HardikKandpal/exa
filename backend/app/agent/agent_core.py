@@ -1,5 +1,6 @@
 import json
 import logging
+import re
 from collections.abc import AsyncGenerator
 from typing import Any
 
@@ -177,7 +178,6 @@ class AgentEngine:
         4. CRITICAL: DO NOT output raw JSON blocks, chart JSON specifications, or code snippets in the text response. Output ONLY natural language summaries and markdown tables. The frontend UI renders interactive charts automatically.
         """
         final_answer = await gemini_client.generate_response(summary_prompt)
-        import re
         final_answer = re.sub(r"```json\s*\{[\s\S]*?\}\s*```", "", final_answer).strip()
         yield self._format_sse_event("stage", {"stage": "final_answer", "content": final_answer})
 
