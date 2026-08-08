@@ -19,6 +19,7 @@ class APIResponse(BaseModel):
 class ChatMessageRequest(BaseModel):
     message: str = Field(..., description="User prompt in natural language")
     conversation_id: str | None = Field(default=None, description="Optional conversation identifier")
+    history: list[dict[str, str]] | None = Field(default=None, description="Optional conversation context history")
 
 
 class PinnedChartCreate(BaseModel):

@@ -22,7 +22,7 @@ async def chat_stream(request: ChatMessageRequest = Body(...)):
     Streams natural language agent reasoning, tool call progress, and final prose answer over SSE.
     """
     return StreamingResponse(
-        agent_engine.stream_agent_execution(request.message),
+        agent_engine.stream_agent_execution(request.message, conversation_context=request.history),
         media_type="text/event-stream",
         headers={
             "Cache-Control": "no-cache",
