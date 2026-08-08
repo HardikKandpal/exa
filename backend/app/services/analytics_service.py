@@ -14,7 +14,7 @@ class AnalyticsService:
     ) -> list[dict[str, Any]]:
         """Computes daily message count per channel in DB."""
         query = """
-            SELECT 
+            SELECT
                 cds.date,
                 c.channel_name,
                 s.server_name,
@@ -39,7 +39,7 @@ class AnalyticsService:
     ) -> list[dict[str, Any]]:
         """Computes cumulative and new member growth trends over time in DB."""
         query = """
-            SELECT 
+            SELECT
                 ds.date,
                 ds.server_id,
                 s.server_name,
@@ -62,7 +62,7 @@ class AnalyticsService:
     ) -> list[dict[str, Any]]:
         """Computes hourly distribution of messages directly in DB using EXTRACT(HOUR)."""
         query = """
-            SELECT 
+            SELECT
                 EXTRACT(HOUR FROM m.timestamp) as hour_of_day,
                 COUNT(m.message_id) as message_count,
                 COUNT(DISTINCT m.user_id) as unique_posters
