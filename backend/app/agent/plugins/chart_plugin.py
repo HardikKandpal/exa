@@ -4,11 +4,12 @@ from typing import Any
 import matplotlib
 from pydantic import BaseModel, Field, field_validator
 
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
 from app.agent.base_plugin import PluginBase, PluginError, PluginOutput
 from app.agent.registry import register_plugin
 from app.services.artifact_service import ArtifactService
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt  # noqa: E402
 
 logger = logging.getLogger(__name__)
 

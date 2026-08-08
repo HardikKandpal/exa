@@ -131,6 +131,13 @@ export default function ChatInterface() {
       lastSql: null
     };
 
+    const history = messages
+      .filter((m) => m.text && m.id !== 'welcome')
+      .map((m) => ({
+        role: m.sender === 'user' ? 'user' : 'assistant',
+        content: m.text
+      }));
+
     setMessages((prev) => [...prev, userMsg, agentMsg]);
     setIsStreaming(true);
 
@@ -138,7 +145,7 @@ export default function ChatInterface() {
       const response = await fetch('/api/chat/stream', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userText })
+        body: JSON.stringify({ message: userText, history })
       });
 
       if (!response.body) return;
